@@ -118,11 +118,7 @@ open class KYCircularProgress: UIView {
     /**
      Set the gradient-direction to vertical. If 'false' it's the standard horizontal direction.
      */
-    open var isGradientVertical: Bool = false {
-        didSet {
-            _ = gradientLayer
-        }
-    }
+    open var isVerticalGradient: Bool = false
 
     open var delegate: KYCircularProgressDelegate?
     
@@ -155,15 +151,13 @@ open class KYCircularProgress: UIView {
     fileprivate lazy var gradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer(layer: self.layer)
         gradientLayer.frame = self.progressView.frame
-        if self.isGradientVertical {
+        if self.isVerticalGradient {
             gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
             gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         } else {
             gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
             gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
         }
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
         gradientLayer.mask = self.progressView.shapeLayer
         gradientLayer.colors = self.colors
         self.layer.addSublayer(gradientLayer)
